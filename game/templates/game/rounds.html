@@ -1,0 +1,18 @@
+{% extends "base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% trans 'Туры' %}</h2>
+{#    {% if allow_creation and user.is_authenticated %}#}
+{#        <a class="button" href="{% url 'game-result-edit' 1 %}">{% trans ' Создать новый тур ' %}</a>#}
+{#    {% endif %}#}
+    <ul>
+        {% for round in rounds_list %}
+            {% if round.active and user.is_authenticated %}
+                <a class="button" href="{% url 'round-finish' round.id %}">{% trans ' Завершить текущий тур ' %}</a>
+            {% endif %}
+            <li><a href="{% url 'round-detail' round.id %}">{{ round.title }}</a>
+            {% trans ' день проведения: ' %}{{ round.start }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

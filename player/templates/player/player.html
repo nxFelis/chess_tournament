@@ -1,0 +1,12 @@
+{% extends "base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% trans 'Игрок' %}</h2>
+    <ul>
+        {% if player %}
+            <p>{% trans ' Имя участника турнира: ' %}{{ player.playername }}</p>
+            <p>{% trans ' Рейтинг: ' %}{{ player.rate }}</p>
+        {% endif %}
+    </ul>
+{% endblock %}

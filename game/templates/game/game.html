@@ -1,0 +1,17 @@
+{% extends "base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+    <ul>
+        {% if game %}
+            <h2>{{ game.title }} {{ game.start }}</h2>
+            <p>{% trans ' Участники: ' %}{{ game.black_player.playername }}
+                {% trans ' vs ' %}{{ game.white_player.playername }}</p>
+            <p>{% trans ' Результат: ' %}{{ result }}
+                {% if user.is_authenticated %}
+                    <a class="button" href="{% url 'game-result-edit' game.id %}">{% trans ' Изменить результат ' %}</a>
+                {% endif %}
+            </p>
+        {% endif %}
+    </ul>
+{% endblock %}

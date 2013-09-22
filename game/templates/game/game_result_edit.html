@@ -1,0 +1,19 @@
+{% extends "base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% trans 'Изменить результат игры ' %}</h2>
+    {% if errorlist %}
+        <div class="error">
+            {{ errorlist }}
+        </div>
+    {% else %}
+        <form action="{% url 'game-result-edit' pk %}" method="POST">
+        {% csrf_token %}
+            {{ result_form.non_field_errors }}
+                {{ result_form.as_p }}
+            <hr />
+            <input class="button" type="submit" value="{% trans 'ИЗМЕНИТЬ' %}" />
+        </form>
+    {% endif %}
+{% endblock %}

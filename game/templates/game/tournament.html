@@ -1,0 +1,38 @@
+{% extends "base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<div id="content-main">
+    <h2>{% trans 'Турниры' %}</h2>
+    <div class="tour">
+    <ul>
+        {% for tour in tournaments_list %}
+            <hr />
+            <h2>{% trans ' Турнир: ' %}{{ tour.title }}</h2>
+            {% if tour.time_rule %}
+                <p>{% trans ' Временные ограничения: ' %}{{ tour.time_rule }}</p>
+            {% endif %}
+            {% if tour.addition_coefficients %}
+                <p>{% trans ' Дополнительные коэффициенты расчета рейтинга: ' %}{{ tour.addition_coefficients }}</p>
+            {% endif %}
+            {% for round in tour.round_set.all %}
+                <hr />
+                <h3>{{ round.title }}  {{ round.start }}</h3>
+                <div class="tour_game">
+                {% for game in round.game_set.all %}
+                    <h3>{{ game.title }}  {{ game.start }}</h3>
+                    <ul>
+                        <li>
+                            {{ game.black_player.playername }}{% trans ' Счет за турнир: ' %}{{ game.black_player.result }}
+                            <p>VS</p>
+                            {{ game.white_player.playername }}{% trans ' Счет за турнир: ' %}{{ game.white_player.result }}
+                        </li>
+                    </ul>
+                {% endfor %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    </div>
+</div>
+{% endblock %}

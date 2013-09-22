@@ -1,0 +1,64 @@
+{% load i18n staticfiles %}
+{% load url from future %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+{% block head %}
+    {% block meta %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    {% endblock %}
+    <title>{% block head_title %}{{ title }}{% endblock %}</title>
+    {% block links %}
+        <link media="screen" href="{{ STATIC_URL }}css/style.css" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    {% block scripts %}
+    {% endblock %}
+{% endblock %}
+</head>
+<body>
+{% block body %}
+<div id="wrapper">
+{% block header %}
+<div id="header">
+    <div class="logo">
+        <a href="{% url 'tournament' %}"><img src="{{ STATIC_URL }}images/logo_test.png" alt="Chess test" /></a>
+    </div>
+    <div class="sidebar">
+        <ul class="head_menu">
+            <li><a href="{% url 'tournament' %}">Турнир</a></li>
+            <li><a href="{% url 'player' %}">Участники турнира</a></li>
+            <li><a href="{% url 'rounds' %}">Туры</a></li>
+            <li><a href="{% url 'games' %}">Игры</a></li>
+        </ul>
+    </div>
+    {% if user.is_authenticated %}
+    <div id="profile">
+        <div class="profile-main">
+{#            <a href="{% url 'logout' %}">Выход</a>#}
+        </div>
+    </div>
+    {%  else %}
+    <div id="profile">
+{#        <a id="login" href="{% url 'auth_login' %}?next={{ request.path }}"></a>#}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block wrapper %}{% endblock %}
+</div>
+{% block content %}{% endblock %}
+{% block footer %}
+<div id="footer">
+    <hr />
+    <div class="footer_menu long">
+        <ul class="menu">
+        </ul>
+        <div class="rights"><span class="copy">Copyright &copy; 2013 Chess test</span> </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_body %}
+{% endblock %}
+{% endblock %}
+</body>
+</html>

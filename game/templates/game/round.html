@@ -1,0 +1,44 @@
+{% extends "base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+    <ul>
+        {% if round %}
+            <h2>{{ round.title }} {{ round.start }}</h2>
+            <p>{% trans ' Участники: ' %}{{ round.couples }}</p>
+            <p>{% trans ' Репортаж: ' %}{{ round.report }}</p>
+            <hr />
+            <h2>{% trans ' Игры за тур: ' %}</h2>
+            {% for game in round.game_set.all %}
+                <li><a href="{% url 'game-detail' game.id %}">{{ game.title }}</a>
+                    {% trans '  начало в ' %}{{ game.start }}</li>
+                <div class='game_players'>
+                    <div class='white_player'>
+                        <h3>{% trans ' Белыми играл: ' %}</h3>
+{#                        <p>{{ game.white_player.degree }} {{ game.white_player.playername }}</p>#}
+                        <p>{{ game.white_player.playername }}</p>
+                    </div>
+                    <div class='black_player'>
+                        <h3>{% trans ' Черными играл: ' %}</h3>
+{#                        <p>{{ game.black_player.degree }} {{ game.black_player.playername }}</p>#}
+                        <p>{{ game.black_player.playername }}</p>
+                    </div>
+                    </div>
+                <div class='game_time_limits'>
+                </div>
+                <div class='game_result'>
+                    <p>{% trans 'Результат игры: ' %}
+                        {% for k, v in result_choices.iteritems %}
+                            {% if game.result == k %}
+                                {{ v }}
+                            {% endif %}
+                        {% endfor %}
+                        {% if user.is_authenticated %}
+                            <a class="button" href="{% url 'game-result-edit' game.id %}">{% trans ' Изменить результат ' %}</a>
+                        {% endif %}
+                    </p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </ul>
+{% endblock %}
